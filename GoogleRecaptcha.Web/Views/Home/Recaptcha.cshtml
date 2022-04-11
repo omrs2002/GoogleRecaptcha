@@ -1,0 +1,53 @@
+﻿@using GoogleRecaptcha.Web
+@using Microsoft.Extensions.Options
+@model GoogleRecaptcha.Web.Models.LoginModel
+
+
+<h1>Login User</h1>
+
+<h4>Login</h4>
+<hr />
+@inject IOptions<GoogleReacaptcha> googleCap;
+
+@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+{
+    
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Token" >
+    <div class="form-group">
+        User Name:
+        <input type="text" asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        Password:
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Login" class="btn btn-primary" />
+    </div>
+}
+
+<script src="https://www.google.com/recaptcha/api.js?render=@googleCap.Value.Sitekey"></script>
+
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+<script>
+    $(document).ready(function() {
+        console.log( "ready!" );
+        grecaptcha.ready(function() {
+         grecaptcha.execute('@googleCap.Value.Sitekey', {action: 'submit'}).then(function(token) {
+             // Add your logic to submit to your backend server here.
+             console.log(token);
+         });
+       });
+});
+</script>
+
+}
