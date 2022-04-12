@@ -1,19 +1,25 @@
 ﻿using GoogleRecaptcha.Web.Models;
+using GoogleRecaptcha.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
 
 namespace GoogleRecaptcha.Web.Controllers
 {
+
+    //[ValidateReCaptcha]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IOptions<GoogleReacaptcha> _googleC;
+        private readonly GoogleRecaptchaService _googleRecaptchaService;
 
-        public HomeController(ILogger<HomeController> logger, IOptions<GoogleReacaptcha> googleC)
+        public HomeController(
+            ILogger<HomeController> logger,
+            GoogleRecaptchaService googleRecaptchaService
+            )
         {
             _logger = logger;
-            _googleC = googleC;
+            _googleRecaptchaService = googleRecaptchaService;
         }
 
         public IActionResult Index()
@@ -22,12 +28,19 @@ namespace GoogleRecaptcha.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
+            
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                if (await _googleRecaptchaService.VirifyTokenAsync(model.Token))
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
+            _logger.Log( LogLevel.Warning, "Recaptcha failed!");
+
             return RedirectToAction("Recaptcha", new LoginModel());
         }
 
