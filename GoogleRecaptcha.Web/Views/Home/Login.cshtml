@@ -1,0 +1,79 @@
+﻿@using GoogleRecaptcha.Web
+@using Microsoft.Extensions.Options
+@model GoogleRecaptcha.Web.Models.LoginModel
+
+
+<h1>Login User with recaptcha</h1>
+
+<h4>Login</h4>
+<hr />
+@inject IOptions<GoogleReacaptchaConf> googleCap;
+
+@using (Html.BeginForm("LoginWithReCaptcha", "Home", FormMethod.Post))
+{
+    
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Token" id="hfToken" >
+    <div class="form-group">
+        User Name:
+        <input type="text" asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        Password:
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    
+    <div class="g-recaptcha" data-sitekey="@googleCap.Value.V2Sitekey"  data-callback="imNotARobot">
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Login" class="btn btn-primary" id="btnsubmit" />
+    </div>
+}
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+<script>
+
+
+    $(document).ready(function() {
+        console.log( "ready!" );
+        //get_token();
+    });
+
+
+      $("#btnsubmit").click(function (e) {
+        //debugger;
+          var hftoken = $("#hfToken").val();
+        if (hftoken == "") {
+            //grecaptcha.execute();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    });
+
+
+
+     var imNotARobot = function () 
+     {
+       console.log(grecaptcha.getResponse());
+       $("#hfToken").val(grecaptcha.getResponse());
+     };
+
+
+
+</script>
+
+}

@@ -27,6 +27,12 @@ namespace GoogleRecaptcha.Web.Controllers
             return View();
         }
 
+        public IActionResult Login()
+        {
+            return View(new LoginModel());
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
@@ -44,6 +50,22 @@ namespace GoogleRecaptcha.Web.Controllers
             return RedirectToAction("Recaptcha", new LoginModel());
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> LoginWithReCaptcha(LoginModel model)
+        {
+            //g-recaptcha-response
+           // var response = Request.Form["g-Recaptcha-Response"];
+            if (ModelState.IsValid)
+            {
+                if (await _googleRecaptchaService.VirifyTokenAsync(model.Token, true))
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            _logger.Log(LogLevel.Warning, "Recaptcha failed!");
+            return RedirectToAction("Login");
+        }
         public IActionResult Recaptcha()
         {
             return View(new LoginModel());
