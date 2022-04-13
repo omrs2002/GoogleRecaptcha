@@ -36,7 +36,7 @@ namespace GoogleRecaptcha.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            
+            var response = Request.Form["g-Recaptcha-Response"];
             if (ModelState.IsValid)
             {
                 if (await _googleRecaptchaService.VirifyTokenAsync(model.Token))
@@ -55,7 +55,7 @@ namespace GoogleRecaptcha.Web.Controllers
         public async Task<IActionResult> LoginWithReCaptcha(LoginModel model)
         {
             //g-recaptcha-response
-           // var response = Request.Form["g-Recaptcha-Response"];
+            var response = Request.Form["g-Recaptcha-Response"];
             if (ModelState.IsValid)
             {
                 if (await _googleRecaptchaService.VirifyTokenAsync(model.Token, true))

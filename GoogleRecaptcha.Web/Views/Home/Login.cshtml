@@ -34,46 +34,34 @@
     </div>
 }
 
-<script src="https://www.google.com/recaptcha/api.js"></script>
 
 
-@section Scripts {
-    @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
 
-<script>
+@section Scripts 
+{
+    
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 
-    $(document).ready(function() {
-        console.log( "ready!" );
-        //get_token();
-    });
-
-
-      $("#btnsubmit").click(function (e) {
-        //debugger;
-          var hftoken = $("#hfToken").val();
-        if (hftoken == "") {
-            //grecaptcha.execute();
-            return false;
-        }
-        else
+    <script>
+        $(document).ready(function() 
         {
-            return true;
-        }
-    });
+            console.log( "ready!" );
+            //get_token();
+        });
 
+        $("#btnsubmit").click(function (e) {
+            //debugger;
+            var hftoken = $("#hfToken").val();
+            return hftoken != "";
+        });
 
+        var imNotARobot = function () 
+        {
+            console.log(grecaptcha.getResponse());
+            $("#hfToken").val(grecaptcha.getResponse());
+        };
 
-     var imNotARobot = function () 
-     {
-       console.log(grecaptcha.getResponse());
-       $("#hfToken").val(grecaptcha.getResponse());
-     };
-
-
-
-</script>
-
+    </script>
 }
