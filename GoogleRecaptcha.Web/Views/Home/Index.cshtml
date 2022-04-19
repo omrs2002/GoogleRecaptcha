@@ -5,4 +5,42 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <br />
+    <img id="imgBarcode" alt="barcode" width="512" height="512"></img>
 </div>
+
+
+
+
+@section Scripts
+{
+ <script>
+      $(document).ready(function() {
+                    console.log( "ready!" );
+
+                    $.ajax
+                    (
+                    {
+                        type: "GET",
+                        url: "https://localhost:44374/api/app/momrah/generate-qRCode?LicenseNo=OXVIampoVkQxNnE5ZHFSdFNYNUVkZz09",
+                        accepts : "application/json",
+                        beforeSend: function (xhr) {
+                        xhr.withCredentials = true;
+                        xhr.setRequestHeader("Authorization", "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkY0NUIzNUI1NDg1M0VEQ0ZDOEQ3NzkyQjA5MTk4RDM5NzM0MkZBODlSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IjlGczF0VWhUN2NfSTEza3JDUm1OT1hOQy1vayJ9.eyJuYmYiOjE2NTAzNTkxNjUsImV4cCI6MTY1MDM2Mjc2NSwiaXNzIjoiaHR0cHM6Ly93d3cuc2JjLXN0Zy5jb20iLCJhdWQiOlsicHJveHlhcGkiLCJ1c2VycHJvZmlsZWFwaXMiLCJJbnZlc3RvclBvcnRhbEFwaSJdLCJjbGllbnRfaWQiOiJJbnZlc3RvclBvcnRhbCIsInN1YiI6ImQxZDQ1NDA4LTI2YmQtNGU4NS05MTIxLTQxYTMyNGY4MTE5ZCIsImF1dGhfdGltZSI6MTY1MDM1MTg1NiwiaWRwIjoibG9jYWwiLCJpZCI6ImQxZDQ1NDA4LTI2YmQtNGU4NS05MTIxLTQxYTMyNGY4MTE5ZCIsIlVzZXJOYW1lIjoiMjA0NTY2OTU1OSIsImdpdmVuX25hbWUiOiLZhdit2YXZiNivINmF2K3ZhdivIiwiZmFtaWx5X25hbWUiOiLZgdmH2K8g2LnZhNmKIiwicGhvbmVfbnVtYmVyIjoiMDA5NjY1NDY4ODk5NTUiLCJlbWFpbCI6ImFiZHVscmRAZ21haWwuY29tIiwicm9sZSI6IkludmVzdG9yIiwiQXJhYmljTmF0aW9uYWxpdHkiOiLYp9mE2LPZiNiv2KfZhiIsIlByb2ZpbGVJbWFnZSI6IiIsIkdlbmRlciI6Ik1hbGUiLCJFbmdsaXNoRmFtaWx5TmFtZSI6IkFsaSIsIkVuZ2xpc2hHcmFuZE5hbWUiOiJGYWhlZCIsIkVuZ2xpc2hNaWRkbGVOYW1lIjoiTW9oYW1tZWQiLCJFbmdsaXNoRmlyc3ROYW1lIjoiTWFobW9kIiwiQXJhYmljRmFtaWx5TmFtZSI6Iti52YTZiiIsIkFyYWJpY0dyYW5kTmFtZSI6ItmB2YfYryIsIkFyYWJpY01pZGRsZU5hbWUiOiLZhdit2YXYryIsIkFyYWJpY0ZpcnN0TmFtZSI6ItmF2K3ZhdmI2K8iLCJCaXJ0aGRhdGVIaWpyaSI6IjE0MDAvMDIvMTMiLCJCaXJ0aGRhdGUiOiJUdWUgSmFuIDAxIDAwOjAwOjAwIEFTVCAxOTgwIiwiSWRlbnRpZmllclR5cGUiOiJjZDBmYWQ1OC0zNjAyLWU1OWEtNTAwZC0zOWY3YTkwOWY3MGIiLCJJQU1Db3VudHJ5Q29kZSI6IjIwNCIsIkVuZ2xpc2hOYXRpb25hbGl0eSI6IlN1ZGFuIiwiUHJvdmlkZXIiOiJpYW0iLCJqdGkiOiI4QkE2M0IyMEREOUYyMDMzNjI5RDJCNkNFRTNBRTIxMiIsInNpZCI6IkIyMDIxRTVFMEU4NDEzNjdBQzM4QTIzODBCOUJCRjkyIiwiaWF0IjoxNjUwMzU5MTY1LCJzY29wZSI6WyJ1c2VycHJvZmlsZWFwaXMiLCJJbnZlc3RvclBvcnRhbEFwaSIsInByb3h5YXBpIiwib3BlbmlkIiwicHJvZmlsZSIsInJvbGVzIl0sImFtciI6WyJwd2QiXX0.CGO-_S95jNs3yKigK_iHtRzTAUqXNBcvrNh99fiCJp_ZS13dNwBDvRfIN-w9pydAZe4RoIxCEVj5HfGzQUhQP1e_lYsuHYXq-JMcGq-U3Y05lUwbgd8J03QGm69JP_s8frt_cn4-DJMop8fR4e7X0_D77-2JEu6uy8rvdnMie0nJNLRIDmm2L8XKkvQEiUG7ttN2RVHrPh_GhQNzFuVPCSGQw5vB_bT0ObvJaLCAcmcpMN8URo0f4rSxeSwkKfejHCiIOrIgk2eyEfhQKHdmWmtuiyCQ6GSNvcX-4LeGDZFYFAz08WbnU4Ocy01LSLEQdRsF3OWyA7yx_3snaG8pGA");
+                    },
+
+                    success: function (data) {
+                        console.log(data);
+                        var baseStr64 = data;
+                        document.getElementById("imgBarcode").setAttribute('src', "data:image/jpg;base64," + baseStr64);
+                        console.log(data);
+                    }
+
+                    }
+                    );
+
+      });
+
+    
+     </script>       
+}

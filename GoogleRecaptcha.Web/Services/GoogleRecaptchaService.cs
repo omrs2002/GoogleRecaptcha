@@ -25,7 +25,10 @@ namespace GoogleRecaptcha.Web.Services
             var captchaResponse = JsonConvert.DeserializeObject<GoogleRecaptchaResponse>(tokenResponse);
             if (captchaResponse != null)
             {
-                if (captchaResponse.Success) {return true;}
+                if (captchaResponse.Success && captchaResponse.Score >=0.0) 
+                    {
+                        return true;
+                    }
                 else
                 {
                     var error = captchaResponse.ErrorCodes[0].ToLower();
