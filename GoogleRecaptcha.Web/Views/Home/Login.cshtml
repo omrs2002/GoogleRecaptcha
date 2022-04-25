@@ -40,7 +40,7 @@
 @section Scripts 
 {
     
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl=ar"></script>
 
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 
@@ -48,6 +48,8 @@
         $(document).ready(function() 
         {
             console.log( "ready!" );
+
+            //$(".rc-anchor-logo-portrait").style.display = 'none';
             //get_token();
         });
 
